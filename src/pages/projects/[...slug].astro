@@ -19,63 +19,166 @@ const formatDate = (date: Date) =>
 ---
 
 <Layout title={data.title}>
-  <main class="max-w-4xl mx-auto px-6 py-16">
-    <a href="/" class="text-sm text-gray-500 hover:text-black transition-colors">← Back to portfolio</a>
-
-    <header class="mt-8 mb-12">
-      <div class="flex flex-wrap gap-2 mb-4">
-        {data.tags.map((tag) => (
-          <span class="text-xs font-medium uppercase tracking-wide text-gray-500">{tag}</span>
-        ))}
+  <div class="min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-wipeout-bg/90 backdrop-blur-sm border-b border-wipeout-gray">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <a href="/" class="flex items-center gap-3 group">
+            <div class="w-8 h-8 border-2 border-wipeout-red hex-clip flex items-center justify-center">
+              <span class="text-wipeout-red font-bold text-sm">KM</span>
+            </div>
+            <span class="font-bold tracking-wider hidden sm:block">KAUR MOKS</span>
+          </a>
+          
+          <!-- Back Button -->
+          <a 
+            href="/" 
+            class="wipeout-tab text-sm font-semibold tracking-wider"
+          >
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+              </svg>
+              BACK
+            </span>
+          </a>
+        </div>
       </div>
-      <h1 class="text-3xl font-bold leading-tight">{data.title}</h1>
-      <p class="text-lg text-gray-600 mt-4 leading-relaxed">{data.description}</p>
     </header>
 
-    <section class="grid grid-cols-2 sm:grid-cols-4 gap-6 py-8 border-y border-gray-200 mb-12">
-      <div>
-        <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Role</p>
-        <p class="text-sm font-medium">{data.role}</p>
-      </div>
-      <div>
-        <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Timeline</p>
-        <p class="text-sm font-medium">
-          {formatDate(data.timeline.startDate)}{data.timeline.endDate ? ` – ${formatDate(data.timeline.endDate)}` : " – Present"}
+    <!-- Project Hero -->
+    <section class="relative pt-24 pb-16 px-6 border-b border-wipeout-gray">
+      <div class="max-w-5xl mx-auto">
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mb-6">
+          {data.tags.map((tag) => (
+            <span class="text-xs font-mono px-3 py-1 bg-white/5 border border-wipeout-gray text-wipeout-red">
+              {tag.toUpperCase()}
+            </span>
+          ))}
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black leading-tight mb-6">
+          {data.title}
+        </h1>
+
+        <!-- Description -->
+        <p class="text-lg md:text-xl text-white/60 max-w-3xl">
+          {data.description}
         </p>
       </div>
-      <div>
-        <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Tools</p>
-        <p class="text-sm font-medium">{data.tools.join(", ")}</p>
-      </div>
-      {data.links && data.links.length > 0 && (
-        <div>
-          <p class="text-xs uppercase tracking-wide text-gray-400 mb-1">Links</p>
-          <div class="flex flex-col gap-1">
-            {data.links.map((link) => (
-              <a href={link.url} target="_blank" rel="noopener" class="text-sm font-medium text-blue-600 hover:underline">{link.label} ↗</a>
-            ))}
+    </section>
+
+    <!-- Project Meta Bar -->
+    <section class="border-b border-wipeout-gray bg-wipeout-bg-alt">
+      <div class="max-w-5xl mx-auto px-6 py-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          <div>
+            <p class="text-xs font-bold text-wipeout-red tracking-wider mb-2">ROLE</p>
+            <p class="text-sm font-semibold">{data.role || 'N/A'}</p>
           </div>
+          <div>
+            <p class="text-xs font-bold text-wipeout-red tracking-wider mb-2">TIMELINE</p>
+            <p class="text-sm font-semibold">
+              {data.timeline?.startDate ? formatDate(data.timeline.startDate) : ''}
+              {data.timeline?.endDate ? ` – ${formatDate(data.timeline.endDate)}` : ' – PRESENT'}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-wipeout-red tracking-wider mb-2">TOOLS</p>
+            <p class="text-sm font-semibold">{data.tools?.join(' / ') || 'N/A'}</p>
+          </div>
+          {data.links && data.links.length > 0 && (
+            <div>
+              <p class="text-xs font-bold text-wipeout-red tracking-wider mb-2">LINKS</p>
+              <div class="flex flex-col gap-1">
+                {data.links.map((link) => (
+                  <a 
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noopener" 
+                    class="text-sm font-semibold text-wipeout-red hover:text-white transition-colors flex items-center gap-1"
+                  >
+                    {link.label}
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
-    </section>
-
-    <section class="grid gap-8 md:grid-cols-3 mb-12">
-      <div class="bg-gray-50 rounded-lg p-6">
-        <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-2">Problem</h2>
-        <p class="text-sm leading-relaxed">{data.problem}</p>
-      </div>
-      <div class="bg-gray-50 rounded-lg p-6">
-        <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-2">Solution</h2>
-        <p class="text-sm leading-relaxed">{data.solution}</p>
-      </div>
-      <div class="bg-gray-50 rounded-lg p-6">
-        <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-2">Outcome</h2>
-        <p class="text-sm leading-relaxed">{data.outcome}</p>
       </div>
     </section>
 
-    <article class="prose prose-gray max-w-none">
-      <Content />
-    </article>
-  </main>
+    <!-- Problem/Solution/Outcome Cards -->
+    <section class="py-16 px-6 border-b border-wipeout-gray">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-6">
+          {data.problem && (
+            <div class="wipeout-card p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-wipeout-red"></div>
+                <h2 class="text-xs font-bold text-wipeout-red tracking-wider">PROBLEM</h2>
+              </div>
+              <p class="text-sm text-white/80 leading-relaxed">{data.problem}</p>
+            </div>
+          )}
+          {data.solution && (
+            <div class="wipeout-card p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-white"></div>
+                <h2 class="text-xs font-bold tracking-wider">SOLUTION</h2>
+              </div>
+              <p class="text-sm text-white/80 leading-relaxed">{data.solution}</p>
+            </div>
+          )}
+          {data.outcome && (
+            <div class="wipeout-card p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-wipeout-red pulse-red"></div>
+                <h2 class="text-xs font-bold text-wipeout-red tracking-wider">OUTCOME</h2>
+              </div>
+              <p class="text-sm text-white/80 leading-relaxed">{data.outcome}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="py-16 px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center gap-6 mb-12">
+          <span class="text-wipeout-red font-bold tracking-wider">04</span>
+          <h2 class="text-xl font-bold tracking-tight">CASE STUDY</h2>
+          <div class="flex-1 h-[1px] bg-wipeout-gray"></div>
+        </div>
+        
+        <article class="prose prose-invert max-w-none">
+          <Content />
+        </article>
+      </div>
+    </section>
+
+    <!-- Footer Navigation -->
+    <footer class="border-t border-wipeout-gray bg-wipeout-bg-alt">
+      <div class="max-w-5xl mx-auto px-6 py-12">
+        <a 
+          href="/" 
+          class="wipeout-button font-bold tracking-wider inline-flex"
+        >
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+            </svg>
+            VIEW ALL PROJECTS
+          </span>
+        </a>
+      </div>
+    </footer>
+  </div>
 </Layout>
