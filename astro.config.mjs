@@ -7,6 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://martinorav-png.github.io',
+  base: '/eka-portfolio-starter-test',
   integrations: [react()],
 
   vite: {
